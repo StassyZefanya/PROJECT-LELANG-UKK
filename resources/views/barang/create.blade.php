@@ -50,7 +50,7 @@
                               <div class="form-group mandatory">
                                 <label for="deskripsi" class="form-label">{{ __('Deskripsi Barang') }}</label>
                                 <div class="form-floating">
-                                  <textarea class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi Barang" id="deskripsi" name="deskripsi">{{ old('deskripsi') }}</textarea>
+                                  <textarea class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi Barang" id="deskripsi" name="deskripsi_barang">{{ old('deskripsi') }}</textarea>
                                     <label for="deskripsi_barang">{{ __('Jelaskan deskripsi barang minimal 10 karakter') }}</label>
                                 </div>
                               </div>

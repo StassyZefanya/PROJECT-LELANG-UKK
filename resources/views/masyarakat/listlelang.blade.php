@@ -1,8 +1,8 @@
 @extends('template.master')
 
-@section('content')
+@section('judul')
 @foreach($lelangs as $item)
-@if($item->pemenang == Auth::user()->name)
+@if($item->pemenang == Auth::user()->nama_petugas)
 <h1>Kamu memenangkan lelang</h1>
 @endif
 @endforeach

@@ -18,7 +18,8 @@ class LelangController extends Controller
     {
         //
         $lelangs = lelang::all();
-        return view('lelang.index', compact('lelangs'));
+        $barangs = barang::all();
+        return view('lelang.index', compact('lelangs','barangs'));
     }
 
     /**

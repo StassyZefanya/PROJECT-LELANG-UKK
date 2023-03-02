@@ -1,6 +1,6 @@
 @extends('template.master')
 
-@section('content')
+@section('judul')
 <h1>Halaman Data Penawaran Lelang</h1>
 @endsection
 

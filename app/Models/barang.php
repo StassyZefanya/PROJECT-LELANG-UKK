@@ -12,8 +12,8 @@ class barang extends Model
     protected $fillable = [
         'nama_barang',
         'tanggal',
-        'harga_awal',
-        'deskripsi'
+        'harga_barang',
+        'deskripsi_barang'
     ];
 
     public function lelang()

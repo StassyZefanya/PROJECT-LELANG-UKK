@@ -25,13 +25,7 @@
           @endif
         </div>
         <div class="info">
-          @if (auth()->user()->level == 'petugas')
-          <a href="/profile" class="d-block">{{ Auth::user()->name}}</a>
-          @elseif (auth()->user()->level == 'admin')
-          <a href="/profile" class="d-block">{{ Auth::user()->name}}</a>
-          @elseif (auth()->user()->level == 'masyarakat')
-          <a href="/profile" class="d-block">{{ Auth::user()->name}}</a>
-          @endif
+          <a href="/profile" class="d-block">{{ Auth::user()->nama_petugas}}</a>
         </div>
       </div>
 
@@ -158,12 +152,12 @@
             </ul>
           </li>
           @elseif (auth()->user()->level == 'masyarakat')
-          <li class="nav-header">DASHBOARD</li>
+          <li class="nav-header">LIST LELANG</li>
           <li class="nav-item">
-            <a href="/dashboard/masyarakat" class="nav-link">
+            <a href="masyarakat.listlelang" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Dashboard
+                List Lelang
               </p>
             </a>
           </li>

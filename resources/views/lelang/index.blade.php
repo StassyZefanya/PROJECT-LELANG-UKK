@@ -103,7 +103,7 @@
   </div>
 </div>
     <a hidden class="btn btn-primary mb-3"href="/petugas/lelang/create">Tambah lelang</a>
-    <a class="btn btn-info mb-3" target="_blank" href="{{route('cetak.lelang')}}">
+    <a class="btn btn-info mb-3" target="_blank" href="/">
       <li class="fas fa fa-print"></li>
       Cetak Data
     </a>

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\masyarakat;
+use App\Models\User;
+use App\Models\Lelang;
+use App\Models\Barang;
+use App\Models\HistoryLelang;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class MasyarakatController extends Controller
@@ -15,6 +20,17 @@ class MasyarakatController extends Controller
     public function index()
     {
         //
+        $historyLelangs = HistoryLelang::orderBy('harga', 'desc')->get()->where('users_id',Auth::user()->id);
+        $lelangs = Lelang::all();
+        $barangs = Barang::all();
+        $users = User::all();
+        return view('masyarakat.index', compact('users','historyLelangs','lelangs','barangs'));
+    }
+
+    public function listlelang()
+    {
+        $lelangs =  Lelang::orderBy('created_at', 'desc')->get();
+        return view('masyarakat.listlelang', compact('lelangs',));
     }
 
     /**
@@ -44,9 +60,11 @@ class MasyarakatController extends Controller
      * @param  \App\Models\masyarakat  $masyarakat
      * @return \Illuminate\Http\Response
      */
-    public function show(masyarakat $masyarakat)
+    public function show(User $user)
     {
         //
+        $masyarakats = User::find($user->id);
+        return view('masyarakat.show', compact('masyarakats'));
     }
 
     /**

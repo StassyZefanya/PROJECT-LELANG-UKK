@@ -53,10 +53,15 @@ route::get('/dashboard/masyarakat', [Dashboardcontroller::class, 'masyarakat'])-
 
 route::view('error/403', 'error.403')->name('error.403');
 
+//Controller lelang
 route::controller(LelangController::class)->group(function () {
+   //route lelang
     route::get('lelang', 'index')->name('lelang.index');
     route::get('lelang/{lelang}', 'show')->name('lelang.show');
     route::put('lelang/{lelang}', 'update')->name('lelang.update');
+    Route::get('petugas/lelang', 'index')->name('lelangpetugas.index')->middleware('auth', 'level:petugas');
+Route::get('petugas/lelang/create', 'create')->name('lelang.create')->middleware('auth', 'level:petugas');
+    Route::post('petugas/lelang', 'store')->name('lelang.store')->middleware('auth', 'level:petugas');
 });
 
 // middleware only admin
@@ -92,15 +97,24 @@ route::middleware(['auth', 'level:masyarakat'])->group(function () {
 });
 // ROUTE MASYARAKAT
 Route::get('data-penawaran-anda', [MasyarakatController::class, 'index'])->name('masyarakatlelang.index')->middleware('auth', 'level:masyarakat');
+Route::get('list-lelang', [MasyarakatController::class, 'listlelang'])->name('masyarakat.listlelang')->middleware('auth','level:masyarakat');
 Route::resource('masyarakat', MasyarakatController::class)->middleware('auth', 'level:admin');
+
+// ROUTE LIST LELANG
+Route::get('/dashboard/masyarakat/listlelang', [ListController::class, 'index'])->name('listlelang.index')->middleware('auth','level:masyarakat');
 
 //Controller HistoryLelang
 Route::controller(HistorylelangController::class)->group(function() {
     //ROUTE HISTORY LELANG
     Route::get('/menawar/{lelang}', 'create')->name('lelangin.create')->middleware('auth','level:masyarakat');
-    Route::get('/data-penawaran', 'index')->name('datapenawar.index')->middleware('auth','level:petugas');
-    Route::post('/menawar/{lelang}', 'store')->name('lelangin.store')->middleware('auth','level:masyarakat');
-    Route::delete('/data-penawaran/{lelang}', 'destroy')->name('lelangin.destroy')->middleware('auth','level:petugas');
+Route::get('cetak-history', 'cetakhistory')->name('cetak.history')->middleware('auth','level:petugas,admin');
+Route::get('/data-penawaran', 'index')->name('datapenawar.index')->middleware('auth','level:petugas,admin');
+Route::post('/menawar/{lelang}', 'store')->name('lelangin.store')->middleware('auth','level:masyarakat');
+Route::post('/komentar/{lelang}', 'storecomments')->name('lelangin.storecomments')->middleware('auth','level:masyarakat,petugas,admin');
+Route::delete('/data-penawaran/{lelang}', 'destroy')->name('lelangin.destroy')->middleware('auth','level:petugas');
+Route::put('/lelangpetugas/{id}/pemenang', 'setPemenang')->name('lelangpetugas.setpemenang');
+
+
         });
 
 

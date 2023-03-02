@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\barang;
+use App\Models\lelang;
+use App\Models\user;
+use App\Models\HistoryLelang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
@@ -26,7 +30,8 @@ class BarangController extends Controller
      */
     public function create()
     {
-        return view('barang.create');
+        $barangs = Barang::all();
+        return view('barang.create', compact('barangs'));
     }
 
     /**
@@ -37,14 +42,34 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        $query = DB::table('barangs')->insert([
-            'nama_barang' => $request->nama_barang,
-            'tanggal' => $request->tanggal,
-            'harga_barang' => $request->harga_barang,
-            'deskripsi_barang' => $request->deskripsi,
+        $validateData = $request->validate([
+            'nama_barang' => 'required',
+            'tanggal' => 'required',
+            'harga_barang' => 'required',
+            'deskripsi_barang' => 'required'
+        ],
+        [
+            'nama_barang.required' => 'Nama barang tidak boleh kosong',
+            'tanggal.required' => 'Tanggal tidak boleh kosong',
+            'harga_barang.required' => 'Harga awal tidak boleh kosong',
+            'deskripsi_barang.required' => 'Deskripsi barang tidak boleh kosong',
         ]
-        );
-        return redirect('/barang');
+    );
+
+        if ($request->file('image')) {
+            $validateData['image'] = $request->file('image')->store('post-images');
+        }
+        $validateData['users_id'] = Auth::id();
+        // Barang::create([
+        //     'nama_barang' => $request->nama_barang,
+        //     'tanggal' => $request->tanggal,
+        //     'harga_barang' => $request->harga_barang,
+        //     'deskripsi_barang' => $request->deskripsi_barang
+        // ]);
+
+        Barang::create($validateData);
+        return redirect()->route('barang.index')->with('success', 'Data Barang Berhasil Ditambahkan');
+    
     }
 
     /**
@@ -80,15 +105,27 @@ class BarangController extends Controller
      */
     public function update(Request $request, barang $barang)
     {
-        $query = DB::table('barangs')->update([
-
-            'nama_barang' => $request->nama_barang,
-            'tanggal' => $request->tanggal,
-            'harga_barang' => $request->harga_barang,
-            'deskripsi_barang' => $request->deskripsi,
-        ]
-        );
-        return redirect('barang');
+        $rules = [
+            'nama_barang' => 'required',
+            'tanggal' => 'required',
+            'harga_barang' => 'required',
+            'deskripsi_barang' => 'required',
+        ];
+        $validateData = $request->validate($rules);
+        if ($request->file('image')) {
+            $validateData['image'] = $request->file('image')->store('post-images');
+        }
+    
+            // $barangs = Barang::find($barang->id);
+            // $barangs->nama_barang = $request->nama_barang;
+            // $barangs->tanggal = $request->tanggal;
+            // $barangs->harga_barang = $request->harga_barang;
+            // $barangs->image = $request->image;
+            // $barangs->deskripsi_barang = $request->deskripsi_barang;
+            // $barangs->update();
+            Barang::where('id', $barang->id)
+                   ->update($validateData);
+            return redirect()->route('barang.index')->with('editsuccess', 'Data Barang Berhasil Diedit');
     }
 
     /**
@@ -102,6 +139,6 @@ class BarangController extends Controller
         $barangs = Barang::find($barang->id);
         $barangs->delete();
 
-        return redirect('barang');
+        return redirect()->route('barang.index')->with('deletesuccess', 'Data Barang Berhasil Dihapus');
     }
 }

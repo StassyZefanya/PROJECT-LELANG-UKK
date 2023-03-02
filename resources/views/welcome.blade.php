@@ -49,7 +49,7 @@
 
 <div class="row pt-5">
   <div class="col text-center">
-    <h2> Stassy's Lelang</h2>
+    <h2> WELLCOME TO WELLBID </h2>
   </div>
 </div>
 
@@ -58,23 +58,10 @@
     <div id="carouselExampleControls" class="carousel slide container" data-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img class="img-fluid" src="{{url('image/mobil.jpeg')}}" alt="First slide">
-        </div>
-        <div class="carousel-item">
-          <img class="img-fluid" src="{{url('image/jam.png')}}" alt="Second slide">
-        </div>
-        <div class="carousel-item">
-          <img class="img-fluid" src="{{url('image/uanglogam.jpeg')}}" alt="Third slide">
+          <img class="img-fluid" src="{{url('image/poster1.jpg')}}" alt="First slide">
         </div>
       </div>
-      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+     </div>
     </div>
   </div>
 </div>
@@ -114,10 +101,10 @@
     </div>
   </div>
   <div class="card">
-    <img class="card-img-top" src="{{url('image/kelapasawit.png')}}" alt="Card image cap">
+    <img class="card-img-top" src="{{url('image/vasbunga.jpeg')}}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">Rp. 45,000,000.00</h5>
-      <p class="card-text">Koin kuno bergambar kelapa sawit</p>
+      <p class="card-text">Vas bunga dengan warna silver dan motif bunga memberi kesan elegan</p>
       <p class="card-text"><small class="text-muted">Last updated 1 mins ago</small></p>
     </div>
   </div>

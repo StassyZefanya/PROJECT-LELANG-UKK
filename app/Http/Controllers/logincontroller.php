@@ -16,38 +16,26 @@ class logincontroller extends Controller
 
     public function proses(Request $request)
     {
-        $user = Validator::make(
-            $request->all(),
-            [
+        $user = $request->validate([
             'username' => 'required',
             'password' => 'required'
         ]);
-        
-        if ($user->fails()) {
-            return redirect('/login')
-                        ->withErrors($user)
-                        ->withInput();
-        
-        }
 
-        $user = $request->all();
-        unset($user['_token']);
         
-        if (Auth::attempt($user));
+        if (Auth::attempt($user))
         {
             $request->session()->regenerate();
             $user = Auth::user();
-
             if ($user->level == 'admin')
             {
-                return redirect()->route('dashboard.admin')->with('succeslogin');
-            } else if ($user->level == 'petugas')
-            {
-                return redirect()->route('dashboard.petugas')->with('succeslogin');
-            } else if ($user->level == 'masyarakat') 
-            {
-                return redirect()->route('dashboard.masyarakat')->with('succeslogin');
-            }else return redirect()->route('login');
+                return redirect()->route('dashboard.admin');
+            } else if ($user->level == 'petugas') {
+                return redirect()->route('dashboard.petugas');
+                // return redirect()->intended('home');
+            } else if ($user->level == 'masyarakat') {
+                return redirect()->route('dashboard.masyarakat');
+                // return redirect()->intended('/masyarakat/home');
+            } else return redirect()->route('login');
         }
 
         return back()->withErrors([
