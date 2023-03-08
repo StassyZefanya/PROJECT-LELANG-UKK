@@ -42,24 +42,19 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
+        $permintaan = $request->validate([
             'nama_barang' => 'required',
             'tanggal' => 'required',
             'harga_barang' => 'required',
-            'deskripsi_barang' => 'required'
-        ],
-        [
-            'nama_barang.required' => 'Nama barang tidak boleh kosong',
-            'tanggal.required' => 'Tanggal tidak boleh kosong',
-            'harga_barang.required' => 'Harga awal tidak boleh kosong',
-            'deskripsi_barang.required' => 'Deskripsi barang tidak boleh kosong',
-        ]
-    );
+            'deskripsi_barang' => 'required',
+            'image' => 'image|file|max:10024',
+        ]);
 
         if ($request->file('image')) {
-            $validateData['image'] = $request->file('image')->store('post-images');
+            $permintaan['image'] = $request->file('image')->store('post-images');
         }
-        $validateData['users_id'] = Auth::id();
+
+        // $validateData['users_id'] = Auth::id();
         // Barang::create([
         //     'nama_barang' => $request->nama_barang,
         //     'tanggal' => $request->tanggal,
@@ -67,7 +62,7 @@ class BarangController extends Controller
         //     'deskripsi_barang' => $request->deskripsi_barang
         // ]);
 
-        Barang::create($validateData);
+        Barang::create($permintaan);
         return redirect()->route('barang.index')->with('success', 'Data Barang Berhasil Ditambahkan');
     
     }
@@ -80,7 +75,7 @@ class BarangController extends Controller
      */
     public function show(barang $barang)
     {
-        $databarang = DB::table('barangs')->get();
+        $databarang = barang::all();
         return view('barang.show', compact('databarang'));
     }
 
@@ -110,7 +105,19 @@ class BarangController extends Controller
             'tanggal' => 'required',
             'harga_barang' => 'required',
             'deskripsi_barang' => 'required',
+            'image' => 'image|file',
         ];
+        $barangs = barang::find($barang->id);
+        $barangs->nama_barang = $request->nama_barang;
+        $barangs->tanggal = $request->tanggal;
+        $barangs->harga_barang = $request->harga_barang;
+        $barangs->deskripsi_barang = $request->deskripsi_barang;
+        $barangs->image = $request->image;
+        $barangs->update();
+
+        return redirect('/barang');
+
+
         $validateData = $request->validate($rules);
         if ($request->file('image')) {
             $validateData['image'] = $request->file('image')->store('post-images');

@@ -6,51 +6,6 @@
 
 @section('content')
 <section class="content">
-  @if(session()->has('success'))
-  <div class="form-group">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="alert alert-success" role="alert">
-          {{session('success')}}
-          <li class="fas fa-check-circle"></li>
-        </div>
-      </div>
-    </div>
-  </div>
-  @elseif(session()->has('editsuccess'))
-  <<div class="form-group">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="alert alert-success" role="alert">
-          {{session('editsuccess')}}
-          <li class="fas fa-check-circle"></li>
-        </div>
-      </div>
-    </div>
-  </div>
-  @elseif(session()->has('deletesuccess'))
-  <div class="form-group">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="alert alert-success" role="alert">
-          {{session('deletesuccess')}}
-          <li class="fas fa-check-circle"></li>
-        </div>
-      </div>
-    </div>
-  </div>
-  @elseif(session()->has('deletefailed'))
-  <div class="form-group">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="alert alert-danger" role="alert">
-          {{session('deletefailed')}}
-          <li class="fas fa-cross-circle"></li>
-        </div>
-      </div>
-    </div>
-  </div>
-  @endif
   <!-- Default box -->
   <div class="card">
     <div class="card-header">
@@ -77,7 +32,7 @@
             <select class="form-select form-control @error('barangs_id') is-invalid @enderror" id="barangs_id" name="barangs_id" data-parsley-required="true">
               <option value="" selected>Pilih Barang</option>
               @forelse ($barangs as $item)
-                <option value="{{ $item->id }}">{{ Str::of($item->nama_barang)->title() }} -  @currency($item->harga_awal)</option>
+                <option value="{{ $item->id }}">{{ Str::of($item->nama_barang)->title() }} -  {{ Str::of($item->harga_barang)->title() }}</option>
               @empty
                 <option value="" disabled>Barang Semuanya Sudah Di Lelang</option>
               @endforelse
@@ -88,8 +43,8 @@
           </div>
           <div class="form-group mandatory">
             <label for="tanggal_lelang" class="form-label">{{ __('Tanggal Lelang') }}</label>
-            <input type="date" id="tanggal_lelang" class="form-control @error('tanggal_lelang') is-invalid @enderror" name="tanggal_lelang" data-parsley-required="true" value="{{ old('tanggal_lelang') }}">
-            @error('tanggal_lelang')
+            <input type="date" id="tanggal" class="form-control @error('tanggal') is-invalid @enderror" name="tanggal" data-parsley-required="true" value="{{ old('tanggal') }}">
+            @error('tanggal')
               <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>
@@ -102,7 +57,7 @@
     </div>
   </div>
 </div>
-    <a hidden class="btn btn-primary mb-3"href="/petugas/lelang/create">Tambah lelang</a>
+    <a hidden class="btn btn-primary mb-3"href="/lelang/create">Tambah lelang</a>
     <a class="btn btn-info mb-3" target="_blank" href="/">
       <li class="fas fa fa-print"></li>
       Cetak Data
@@ -119,14 +74,14 @@
       </button>
     </div>
   </div>
-  <div class="card-body p-0">
+  <div class="card-body table-responsive p-0">
   <table class="table table-hover">
         <thead>
             <tbody>
                 <tr>
                     <th>No</th>
-                    <th>Nama barang</th>
-                    <th>Harga awal</th>
+                    <th>Nama Barang</th>
+                    <th>Harga Awal</th>
                     <th>Harga Akhir</th>
                     <th>Pemenang</th>
                     <th>Status</th>
@@ -147,8 +102,8 @@
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $item->barang->nama_barang }}</td>
-            <td>@currency($item->barang->harga_awal)</td>
-            <td>@currency($item->harga_akhir)</td>
+            <td>{{ $item->barang->harga_barang}}</td>
+            <td>{{ $item->harga_akhir }}</td>
             <td>{{ $item->pemenang }}</td>
             <td>
               <span class="badge {{ $item->status == 'ditutup' ? 'bg-danger' : 'bg-success' }}">{{ Str::title($item->status) }}</span>

@@ -46,9 +46,9 @@
         <tbody>
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $item->user->name }}</td>
-            <td>{{ $item->nama_barang }}</td>
-            <td>@currency($item->harga)</td>
+            <td>{{ $item->user->username }}</td>
+            <td>{{ $item->lelang->barang->nama_barang }}</td>
+            <td>{{$item->harga}}</td>
             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
             <td>
               <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ Str::title($item->status) }}</span>

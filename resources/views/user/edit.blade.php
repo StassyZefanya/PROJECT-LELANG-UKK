@@ -1,6 +1,6 @@
 @extends('template.master')
 
-@section('content')
+@section('judul')
 <h1>Edit Data Akun</h1>
 @endsection
 

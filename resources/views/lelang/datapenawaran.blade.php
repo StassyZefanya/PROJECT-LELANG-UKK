@@ -11,10 +11,6 @@
         <li class="fas fa fa-print"></li>
         Cetak Data
       </a>
-      <a href="/" target="_blank"class="btn btn-info">
-        <li class="fas fa fa-print"></li>
-        Download Data
-      </a>
     
     <div class="card-tools">
       <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -52,16 +48,16 @@
         <tbody>
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $item->user->name }}</td>
+            <td>{{ $item->user->username }}</td>
             @if(Auth::user()->level == 'petugas')
             <td><a href="{{route('lelangpetugas.show', $item->lelang->id)}}">{{ $item->lelang->barang->nama_barang }}</a></td>
             @elseif(Auth::user()->level == 'admin')
             <td>{{ $item->lelang->barang->nama_barang }}</td>
             @endif
-            <td>@currency($item->harga)</td>
+            <td>{{$item->harga}}</td>
             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
             <td>
-              <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ Str::title($item->status) }}</span>
+            <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : ($item->status == 'gugur' ? 'bg-danger' : 'bg-success') }}">{{ Str::title($item->status) }}</span>
             </td>
             @if (auth()->user()->level == 'admin')
 

@@ -1,13 +1,13 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    @if(auth()->user()->level == 'masyarakat')
+    @if(Auth::user()->level == 'masyarakat')
     <a href="{{route('dashboard.masyarakat')}}" class="brand-link">
-      @elseif(auth()->user()->level == 'admin')
+      @elseif(Auth::user()->level == 'admin')
       <a href="{{route('dashboard.admin')}}" class="brand-link">
-        @elseif(auth()->user()->level == 'petugas')
+        @elseif(Auth::user()->level == 'petugas')
         <a href="{{route('dashboard.petugas')}}" class="brand-link">
       @endif
-      <span class="brand-text font-weight-light">Lelang Online</span>
+      <span class="brand-text font-weight-light">WELLBID</span>
       
     </a>
 
@@ -66,39 +66,6 @@
               </p>
             </a>
           </li>
-          <li class="nav-header">DATA PENAWARAN</li>
-          <li class="nav-item">
-            <a href="{{route('datapenawar.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-tags"></i>
-              <p>
-                Data Penawaran Lelang
-              </p>
-            </a>
-          </li>
-          <li class="nav-header">GENERATE LAPORAN</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Laporan
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-file"></i>
-                  <p>Laporan Lelang</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-file"></i>
-                  <p>Laporan History</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           @elseif (auth()->user()->level == 'admin')
           <li class="nav-header">DATA BARANG</li>
           <li class="nav-item">
@@ -127,34 +94,10 @@
               </p>
             </a>
           </li>
-          <li class="nav-header">GENERATE LAPORAN</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Laporan
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-file"></i>
-                  <p>Laporan Lelang</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-file"></i>
-                  <p>Laporan History</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           @elseif (auth()->user()->level == 'masyarakat')
           <li class="nav-header">LIST LELANG</li>
           <li class="nav-item">
-            <a href="masyarakat.listlelang" class="nav-link">
+            <a href="{{route('masyarakat.listlelang')}}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 List Lelang

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\lelang;
 use App\Models\barang;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Historylelang;
 
@@ -18,8 +19,19 @@ class HistorylelangController extends Controller
     public function index()
     {
         //
-        $historyLelangs = Historylelang::all();
-        return view('lelang.datapenawaran', compact('historyLelangs'));
+        $historyLelangs = Historylelang::orderBy('harga', 'desc')->get();
+        $lelangs = Lelang::all();
+        $barangs = Barang::all();
+        $users = User::all();
+        return view('lelang.datapenawaran', compact('users','historyLelangs','lelangs','barangs'));
+        // $historyLelangs = Historylelang::all();
+        // return view('lelang.datapenawaran', compact('historyLelangs'));
+    }
+    public function cetakhistory()
+    {
+        //
+        $cetakhistoryLelangs = HistoryLelang::orderBy('harga', 'desc')->get();
+        return view('lelang.cetakhistory', compact('cetakhistoryLelangs'));
     }
 
     /**
@@ -56,7 +68,6 @@ class HistorylelangController extends Controller
 
         $historyLelang = new Historylelang();
         $historyLelang->lelang_id = $lelang->id;
-        $historyLelang->nama_barang = $lelang->barang->nama_barang;
         $historyLelang->users_id = Auth::user()->id;
         $historyLelang->harga = $request->harga_penawaran;
         $historyLelang->status = 'pending';
@@ -114,5 +125,25 @@ class HistorylelangController extends Controller
         //     return;
         // }
         return redirect()->route('datapenawar.index');
+    }
+    public function setPemenang(Lelang $lelang, $id)
+    {
+    // Mengambil data history lelang berdasarkan id
+    $historyLelang = HistoryLelang::findOrFail($id);
+
+    // Mengubah status pada history lelang menjadi 'pemenang'
+    $historyLelang->status = 'pemenang';
+    $historyLelang->save();
+
+    // Mengambil data lelang berdasarkan history lelang
+    $lelang = $historyLelang->lelang;
+
+    // Mengubah status pada lelang menjadi 'ditutup'
+    $lelang->status = 'ditutup';
+    $lelang->pemenang = $historyLelang->user->nama_petugas;
+    $lelang->harga_akhir = $historyLelang->harga;
+    $lelang->save();
+
+    return redirect()->back()->with('success', 'Pemenang berhasil dipilih!');
     }
 }

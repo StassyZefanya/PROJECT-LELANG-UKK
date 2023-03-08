@@ -51,8 +51,8 @@
                               <div class="form-group mandatory">
                                 <label for="deskripsi" class="form-label">{{ __('Deskripsi Barang') }}</label>
                                 <div class="form-floating">
-                                  <textarea class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi Barang" id="deskripsi" name="deskripsi">{{ old('deskripsi', Str::of($barangs->deskripsi)->title()) }}</textarea>
-                                    <label for="deskripsi">{{ __('Jelaskan deskripsi barang minimal 10 karakter') }}</label>
+                                  <textarea class="form-control @error('deskripsi_barang') is-invalid @enderror" placeholder="Deskripsi Barang" id="deskripsi" name="deskripsi_barang">{{ old('deskripsi', Str::of($barangs->deskripsi)->title()) }}</textarea>
+                                    <label for="deskripsi_barang">{{ __('Jelaskan deskripsi barang minimal 10 karakter') }}</label>
                                 </div>
                               </div>
                                 @error('deskripsi')

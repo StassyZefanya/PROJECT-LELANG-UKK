@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Historylelang;
 
 class User extends Authenticatable
 {
@@ -43,4 +44,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function historylelang()
+    {
+        return $this->belongsTo(HistoryLelang::class);
+    }
+    public function lelang()
+    {
+        return $this->belongsTo(lelang::class);
+    }
+    public function barang()
+    {
+        return $this->belongsTo(barang::class);
+    }
 }

@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('telepon');
             $table->enum('level', ['admin', 'petugas','masyarakat']);
+            $table->string('photo')->nullable()->before('remember_token');
             $table->rememberToken();
             $table->timestamps();
         });

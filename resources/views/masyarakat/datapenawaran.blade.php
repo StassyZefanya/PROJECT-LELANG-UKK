@@ -2,9 +2,7 @@
 
 @section('judul')
 <h1>Halaman Data Penawaran Lelang</h1>
-@endsection
 
-@section('content')
 <section class="content">
   <!-- Default box -->
   <div class="card">
@@ -47,9 +45,9 @@
         <tbody>
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $item->user->name }}</td>
+            <td>{{  $item->user->username}}</td>
             <td><a href="{{route('lelangpetugas.show', $item->lelang->id)}}">{{ $item->lelang->barang->nama_barang }}</a></td>
-            <td>@currency($item->harga)</td>
+            <td>{{$item->harga}}</td>
             <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
             <td>
               <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ Str::title($item->status) }}</span>

@@ -1,11 +1,8 @@
 @extends('template.master')
 
 @section('content')
-<h1>Dashboard Petugas</h1>
-@endsection
-
-@section('content')
 <section class="content">
+<h1>HALLO PETUGAS!</h1>
   @if(session()->has('successlogin'))
   <div class="alert alert-info col-md-5" role="alert">
     {{session('successlogin')}}Selamat datang <strong>{{Auth::user()->name}}</strong>
@@ -91,13 +88,12 @@
           <tbody>
           <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $item->user->name }}</td>
+              <td>{{  $item->user->username}}</td>
               <td>{{ $item->lelang->barang->nama_barang }}</td>
-              <td>@currency($item->harga)</td>
+              <td>{{$item->harga}}</td>
               <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
               <td>
-                <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ Str::title($item->status) }}</span>
-              </td>
+              <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : ($item->status == 'gugur' ? 'bg-danger' : 'bg-success') }}">{{ Str::title($item->status) }}</span></td>
           </tr>
           @empty
           <tr>

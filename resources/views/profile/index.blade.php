@@ -1,6 +1,6 @@
 @extends('template.master')
 
-@section('content')
+@section('judul')
 <h1>Profile</h1>
 @endsection
 
@@ -21,19 +21,13 @@
                 @endif
               </div>
 
-              <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
+              <h3 class="profile-username text-center">{{Auth::user()->nama_petugas}}</h3>
 
               <p class="text-muted text-center">{{Auth::user()->level}}</p>
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Followers</b> <a class="float-right">1,322</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Following</b> <a class="float-right">543</a>
-                </li>
-                <li class="list-group-item">
-                  <b>Friends</b> <a class="float-right">13,287</a>
+                  <b>Penawaran</b> <a class="float-right">{{ $historyLelangs->where('users_id',Auth::user()->id)->count()}}</a>
                 </li>
               </ul>
             </div>
@@ -55,24 +49,19 @@
                 <!-- /.tab-pane -->
                 <div class="tab-pane active" id="details">
                     <form class="form-horizontal">
-                          <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" name="name" value="{{ Auth::user()->name }}" class="form-control"readonly>
-                          </div>
-                          <div class="form-row">
-                          <div class="form-group col-md-4">
+                      <div class="form-row">
+                         <div class="form-group col-md-6">
                             <label>Username</label>
                             <input type="text" name="username" value="{{ Auth::user()->username }}" class="form-control"readonly>
                           </div>
-                          <div class="form-group col-md-4">
+                          <div class="form-group col-md-6">
                             <label>Telepon</label>
                             <input type="text" name="telepon" value="{{ Auth::user()->telepon }}"class="form-control"readonly>
                           </div>
-                          <div class="form-group col-md-4">
-                            <label>Level</label>
-                            <input type="text" name="level" value="{{ Auth::user()->level }}" class="form-control"readonly>
-                          </div>
-                        </div>
+                         </div>
+                          <div class="form-group ">
+                            <label>Nama</label>
+                            <input type="text" name="name" value="{{ Auth::user()->nama_petugas }}" class="form-control"readonly></div>
                           <div class="form-group">
                             <label>Waktu dibuat</label>
                             <input type="text" name="created_at" value="{{ Auth::user()->created_at }}"class="form-control"readonly>
@@ -111,8 +100,34 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                          <input type="password" class="form-control" name="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Simpan</button>
+                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#konfirmasi-modal">Simpan</button>
+                          <div class="modal fade" id="konfirmasi-modal" tabindex="-1" role="dialog" aria-labelledby="konfirmasi-modal-label" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="konfirmasi-modal-label">Konfirmasi</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Apakah Anda yakin ingin menyimpan perubahan ini?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        <button type="submit" class="btn btn-danger">Simpan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         </div>
                     </div>
                   </form>

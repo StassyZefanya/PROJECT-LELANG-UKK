@@ -13,11 +13,12 @@ class barang extends Model
         'nama_barang',
         'tanggal',
         'harga_barang',
-        'deskripsi_barang'
+        'deskripsi_barang',
+        'image'
     ];
 
     public function lelang()
     {
-        return $this->belongsTo(Lelang::class);
+        return $this->belongsTo(lelang::class);
     }
 }

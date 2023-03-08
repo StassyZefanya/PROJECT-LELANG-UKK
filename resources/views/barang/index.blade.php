@@ -9,7 +9,6 @@
   <div class="card">
       <div class="card-header d-flex justify-content-between">
         <a href="{{ route('barang.create') }}" class="btn btn-primary btn-md">{{ __('Tambah Barang') }}</a>
-        <a href="/export/guru" class="btn btn-info ml-auto btn-md">{{ __('Export Barang') }}</a>
       </div>
       <div class="card-body">
           <table class="table table-striped" style="width: 100%" id="table1">

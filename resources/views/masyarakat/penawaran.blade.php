@@ -9,9 +9,7 @@
   </div>
 </div>
 @endif
-@endsection
 
-@section('content')
 <style>
 .card {
   border-radius: 10px;
@@ -77,7 +75,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><strong>Rp.</strong></span>
                             </div>
-                          <input type="text" name="harga_penawaran"class="form-control @error('harga_penawaran') is-invalid @enderror" placeholder="Masukan Harga harus lebih dari @currency($lelangs->barang->harga_awal)">
+                          <input type="text" name="harga_penawaran"class="form-control @error('harga_penawaran') is-invalid @enderror" placeholder="Masukan Harga harus lebih dari {{$lelangs->barang->harga_awal}}">
                           @error('harga_penawaran')
                           <div class="invalid-feedback">
                             <b>{{ $message }}</b>
@@ -128,13 +126,13 @@
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-3 col-form-label">Harga Awal</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputEmail" value="@currency($lelangs->barang->harga_awal)" readonly>
+                        <input type="text" class="form-control" id="inputEmail" value="{{$lelangs->barang->harga_barang}}" readonly>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputHargaAkhir" class="col-sm-3 col-form-label">Harga Akhir</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inputHargaAkhir" value="@currency($lelangs->harga_akhir)" readonly>
+                        <input type="text" class="form-control" id="inputHargaAkhir" value="{{$lelangs->harga_akhir}}" readonly>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -193,7 +191,7 @@
                                 <div class="input-group-prepend">
                                   <span class="input-group-text"><strong>Rp.</strong></span>
                                 </div>
-                              <input type="text" name="harga_penawaran" class="form-control @error('harga_penawaran') is-invalid @enderror" placeholder="Masukan Harga harus lebih dari @currency($lelangs->barang->harga_awal)">
+                              <input type="text" name="harga_penawaran" class="form-control @error('harga_penawaran') is-invalid @enderror" placeholder="Masukan Harga harus lebih dari {{$lelangs->barang->harga_barang}}">
                               @error('harga_penawaran')
                               <div class="invalid-feedback">
                                 <b>{{ $message }}</b>
@@ -269,13 +267,12 @@
               @forelse ($historyLelangs as $item)
               <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->user->name }}</td>
+                <td>{{  $item->user->username}}</td>
                 <td>{{ $item->lelang->barang->nama_barang }}</td>
-                <td>@currency($item->harga)</td>
+                <td>{{$item->harga}}</td>
                 <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
                 <td>
-                  <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ Str::title($item->status) }}</span>
-                </td>
+                <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : ($item->status == 'gugur' ? 'bg-danger' : 'bg-success') }}">{{ Str::title($item->status) }}</span></td>
                 @if (auth()->user()->level == 'admin')
                 <td>
                   <a class="btn btn-primary btn-sm" href="{{ route('lelangadmin.show', $item->id)}}">
@@ -318,64 +315,5 @@
       <!-- /.card-body -->
       <!-- /.card-footer-->
     </div>
-    @if($lelangs->status == 'ditutup')
-    <div class="container">
-      <h3>Komentar</h3>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="media border p-3">
-            <img src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
-            <div class="media-body">
-              <h4>John Doe <small><i>Posted on February 19, 2023</i></small></h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
-            </div>
-          </div>
-          <br>
-          <div class="media border p-3">
-            <img src="https://www.w3schools.com/bootstrap4/img_avatar2.png" alt="Jane Doe" class="mr-3 mt-3 rounded-circle" style="width:60px;">
-            <div class="media-body">
-              <h4>Jane Doe <small><i>Posted on February 18, 2023</i></small></h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-md-12">
-          <form>
-            <div class="form-group">
-              <label for="nama">Nama:</label>
-              <input type="text" class="form-control" id="nama" placeholder="Masukkan nama" name="nama">
-            </div>
-            <div class="form-group">
-              <label for="komentar">Komentar:</label>
-              <textarea class="form-control" rows="5" id="komentar" placeholder="Masukkan komentar" name="komentar"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-    </div>
-    @else
-    @endif
-    
-    @if(session()->has('ucapan'))
-    <div class="container my-5">
-      <div class="row">
-        <div class="col-md-8 offset-md-2">
-          <div class="card bg-light">
-            <div class="card-body">
-              <h1 class="text-center mb-4"> {{session('ucapan')}} Terima Kasih Telah Menawar</h1>
-              <p class="text-justify">Kami sangat mengapresiasi kesediaan Anda untuk menawar barang lelang di situs kami. Setiap penawaran yang Anda berikan membantu kami untuk memberikan pelayanan yang lebih baik kepada semua pengguna situs.</p>
-              <p class="text-justify">Kami selalu berusaha untuk memberikan pengalaman yang terbaik dalam membeli atau menjual barang lelang di situs kami. Jangan ragu untuk terus mengunjungi situs kami untuk mencari barang lelang yang menarik dan menawarkan penawaran yang terbaik.</p>
-              <p class="text-center mt-5"><a href="{{ route('masyarakat.listlelang') }}" class="btn btn-primary">Kembali ke Halaman Lelang</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    @endif
-    
   </section>
 @endsection

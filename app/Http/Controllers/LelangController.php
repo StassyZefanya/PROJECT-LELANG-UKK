@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\barang;
 use App\Models\lelang;
+use App\Models\HistoryLelang;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,9 +19,19 @@ class LelangController extends Controller
     public function index()
     {
         //
-        $lelangs = lelang::all();
-        $barangs = barang::all();
+        $lelangs = lelang::orderBy('created_at','desc')->get();
+        $barangs = Barang::select('id', 'nama_barang', 'harga_barang')
+                    ->whereNotIn('id', function($query)
+                    {
+                        $query->select('barangs_id')->from('lelangs');
+                    })->get();
         return view('lelang.index', compact('lelangs','barangs'));
+    }
+    public function cetaklelang()
+    {
+        //
+        $cetaklelangs = Lelang::all();
+        return view('lelang.cetaklelang', compact('cetaklelangs'));
     }
 
     /**
@@ -30,7 +42,7 @@ class LelangController extends Controller
     public function create()
     {
         //
-        $barangs = barang::select('id', 'nama_barang', 'harga_awal')
+        $barangs = barang::select('id', 'nama_barang', 'harga_barang')
             ->whereNotIn('id', function ($query) {
                 $query->select('barangs_id')->from('lelangs');
             })->get();
@@ -46,28 +58,30 @@ class LelangController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'barangs_id' => 'required|exists:barangs,id|unique:lelangs,barangs_id',
-            'tanggal' => 'required|date',
-            'harga_akhir' => 'required|numeric'
-        ], [
-            'barang_id.required' => 'Barang Harus Diisi',
-            'barang_id.exists' => 'Barang Tidak Ada Pada Data Barang',
-            'barang_id.unique' => 'Barang Sudah Ada',
-            'tanggal.required' => 'Tanggal Lelang Harus Diisi',
-            'tanggal.date' => 'Tanggal Lelang Harus Berupa Tanggal',
-            'harga_akhir.required' => 'Harga Akhir Harus Diisi',
-            'harga_akhir.numeric' => 'Harga Akhir Harus Harus Berupa Angka',
-        ]);
+        $request->validate(
+            [
+                'barangs_id'         => 'required|exists:barangs,id|unique:lelangs,barangs_id',
+                'tanggal'    => 'required|date',
+            ],
+            [
+                'barangs_id.required'        => 'Barang Harus Diisi',
+                'barangs_id.exists'          => 'Barang Tidak Ada Pada Data Barang',
+                'barangs_id.unique'          => 'Barang Sudah Di Lelang',
+                'tanggal.required'   => 'Tanggal Lelang Harus Diisi',
+                'tanggal.date'       => 'Tanggal Lelang Harus Berupa Tanggal',
+                
+            ]
+        );
         $lelang = new lelang;
         $lelang->barangs_id = $request->barangs_id;
         $lelang->tanggal = $request->tanggal;
-        $lelang->harga_akhir = $request->harga_akhir;
+        $lelang->harga_akhir = '0';
         $lelang->users_id = Auth::user()->id;
         $lelang->status = 'dibuka';
+        $lelang->pemenang = 'Belum Ada';
         $lelang->save();
 
-        return redirect()->route('lelang.index')->with('success', 'Data Berhasil Ditambahkan');
+        return redirect()->route('lelangpetugas.index')->with('success','Data lelang berhasil ditambahkan');
     }
 
     /**
@@ -79,6 +93,9 @@ class LelangController extends Controller
     public function show(lelang $lelang)
     {
         //
+        $historyLelangs = HistoryLelang::orderBy('harga', 'desc')->get()->where('lelang_id',$lelang->id);
+        $lelangs = Lelang::find($lelang->id);
+        return view('lelang.show', compact('lelangs','historyLelangs'));
     }
 
     /**
@@ -115,5 +132,21 @@ class LelangController extends Controller
         //
         $lelangs = lelang::select('id', 'barangs_id', 'tanggal', 'harga_akhir', 'status')->get();
         return view('listlelang.index', compact('lelangs'));
+    }
+    public function cetakpenawaran(Lelang $lelang, $status = null)
+    {
+    $lelangs = Lelang::find($lelang->id);
+    
+    if($status == 'pemenang'){
+        $historyLelangs = HistoryLelang::orderBy('harga', 'desc')->where('lelang_id',$lelang->id)->where('status', 'pemenang')->get();
+    } elseif($status == 'pending') {
+        $historyLelangs = HistoryLelang::orderBy('harga', 'desc')->where('lelang_id',$lelang->id)->where('status', 'pending')->get();
+    } elseif($status == 'gugur') {
+        $historyLelangs = HistoryLelang::orderBy('harga', 'desc')->where('lelang_id',$lelang->id)->where('status', 'gugur')->get();
+    } else {
+        $historyLelangs = HistoryLelang::orderBy('harga', 'desc')->where('lelang_id',$lelang->id)->get();
+    }
+    
+    return view('lelang.cetakdatapenawaran', compact('lelangs','historyLelangs','comments'));
     }
 }

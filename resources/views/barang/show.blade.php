@@ -17,6 +17,18 @@
               <div class="card-content">
                   <div class="card-body">
                         <div class="row">
+                        
+                        <!-- Profile Image -->
+                        
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    @if ($databarang[0]->image)
+                                        <img class="img-fluid mt-3" src="{{ asset('storage/' . $databarang[0]->image) }}"
+                                            alt="User profile picture">
+                                    @endif
+                                </div>
+                            </div>
+                        <br>
                             <div class="col-md-4 col-12">
                                 <div class="form-group mandatory">
                                     <label for="nama_barang" class="form-label">{{ __('Nama Barang') }}</label>
@@ -32,7 +44,7 @@
                             <div class="col-md-4 col-12">
                                 <div class="form-group mandatory">
                                     <label for="harga_awal" class="form-label">{{ __('Harga Awal') }}</label>
-                                    <input type="text" id="harga_awal" class="form-control @error('harga_awal') is-invalid @enderror" placeholder="Input Harga, Hanya Angka" name="harga_awal" data-parsley-required="true" value="@currency($databarang[0]->harga_awal)" disabled>
+                                    <input type="text" id="harga_awal" class="form-control @error('harga_awal') is-invalid @enderror" placeholder="Input Harga, Hanya Angka" name="harga_awal" data-parsley-required="true" value="{{ Str::of($databarang[0]->harga_barang)->title() }}" disabled>
                                 </div>
                             </div>
                           </div>

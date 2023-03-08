@@ -3,7 +3,7 @@
 @section('judul')
 @foreach($lelangs as $item)
 @if($item->pemenang == Auth::user()->nama_petugas)
-<h1>Kamu memenangkan lelang</h1>
+<h1>Pilih Barang Impianmu!</h1>
 @endif
 @endforeach
 <style>
@@ -77,12 +77,6 @@
 
 @section('content')
 <section class="content">
-  <div class="card animate__animated animate__delay-1s animate__fadeInUp">
-    <div class="card-body">
-      <h5 class="card-title">Tawarkan Barang Impianmu dan Menangkan!</h5>
-      <p class="card-text">Jangan lewatkan kesempatan untuk memenangkan barang impianmu di website perlelangan kami. Di sini kamu bisa menawar barang berkualitas dengan harga yang terjangkau. Tawarlah sekarang dan jangan sampai kehilangan kesempatanmu untuk memenangkan barang yang kamu idamkan!</p>
-    </div>
-  </div>
   <div id="baranglelang" class="container"></div>
   <div class="row">
     @forelse($lelangs as $item)
@@ -96,10 +90,10 @@
           <h4 class="card-title">{{ $item->barang->nama_barang}}</h4>
           <p class="card-text">{{ $item->barang->deskripsi_barang}}</p>
           @if($item->status == 'dibuka')
-          <p class="card-text">Harga Awal: @currency($item->barang->harga_awal)</p>
+          <p class="card-text">Harga Awal: {{$item->barang->harga_barang}}</p>
           <a href="{{ route('lelangin.create', $item->id)}}" class="btn btn-primary animate__animated animate__delay-3s animate__bounceIn">TAWAR SEKARANG</a>
           @else
-          <p class="card-text">Harga Akhir: @currency($item->harga_akhir)</p>
+          <p class="card-text">{{$item->harga_barang}}</p>
           <p class="card-text">Pemenang: {{ $item->pemenang }}</p>
           <a href="{{ route('lelangin.create', $item->id)}}" class="btn btn-info animate__animated animate__delay-3s animate__bounceIn">LIHAT DETAIL</a>
           @endif

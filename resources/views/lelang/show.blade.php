@@ -70,13 +70,13 @@
                       <div class="form-group col-md-6">
                         <label for="inputEmail">Harga Awal</label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control" id="inputEmail" value="@currency($lelangs->barang->harga_awal)"disabled>
+                          <input type="text" class="form-control" id="inputEmail" value="{{Str::of($lelangs->barang->harga_barang)->title()}}"disabled>
                         </div>
                       </div>
                       <div class="form-group col-md-6">
                         <label for="inputEmail">Harga akhir</label>
                         <div class="col-sm-12">
-                          <input type="text" class="form-control" id="inputEmail" value="@currency($lelangs->harga_akhir)"disabled>
+                          <input type="text" class="form-control" id="inputEmail" value="{{Str::of($lelangs->barang->harga_barang)->title()}}"disabled>
                         </div>
                       </div>
                     </div>
@@ -111,7 +111,7 @@
                   @elseif(auth()->user()->level == 'masyarakat')
                   <a href="{{route('dashboard.masyarakat')}}" class="btn btn-outline-info">Kembali</a>
                     @elseif(auth()->user()->level == 'petugas')
-                    <a href="{{ route('lelangpetugas.index')}}" class="btn btn-outline-info">Kembali</a>
+                    <a href="/petugas/lelang" class="btn btn-outline-info">Kembali</a>
                   @endif
                   </form>
                 </div>
@@ -172,19 +172,20 @@
           <tbody>
           <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $item->user->name }}</td>
+              <td>{{ $item->user->username }}</td>
               <td>{{ $item->lelang->barang->nama_barang }}</td>
-              <td>@currency($item->harga)</td>
+              <td>{{ $item->harga }}</td>
               <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
               <td>
-                <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : 'bg-success' }}">{{ Str::title($item->status) }}</span>
+                <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : ($item->status == 'gugur' ? 'bg-danger' : 'bg-success') }}">{{ Str::title($item->status) }}</span>
               </td>
               @if(Auth::user()->level == 'petugas')
               <td>
-                <a class="btn btn-success btn-sm" href="{{ route('lelangpetugas.show', $item->id)}}">
-                  <i class="fas fa-check">
-                  </i>
-                  Pilih Jadi Pemenang
+              <form action="{{ route('lelangpetugas.setpemenang', $item->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-info">pilih</button>
+                          </form>
               </a>
               </td>
               @else
