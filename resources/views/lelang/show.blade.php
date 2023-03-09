@@ -11,23 +11,9 @@
         
         @if(!empty($lelangs))
       <div class="row">
-        <div class="col-md-5">
-          <!-- Profile Image -->
-          <div class="card card-primary card-outline">
-            <div class="card-body box-profile">
-              <div class="text-center">
-               @if($lelangs->barang->image)
-                <img class="img-fluid mt-3" src="{{ asset('storage/' . $lelangs->barang->image)}}" alt="User profile picture">
-                @endif
-            </div>
-        
-            </div>
-            <!-- /.card-body -->
-          </div>
-        </div>
         
         <!-- /.col -->
-        <div class="col-md-7">
+        <div class="col-md-12">
           <div class="card">
             <div class="card-header p-2">
                 <ul class="nav nav-pills">
@@ -176,10 +162,11 @@
               <td>{{ $item->lelang->barang->nama_barang }}</td>
               <td>{{ $item->harga }}</td>
               <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
-              <td>
-                <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : ($item->status == 'gugur' ? 'bg-danger' : 'bg-success') }}">{{ Str::title($item->status) }}</span>
-              </td>
+              <td><span class="badge text-white {{ $item->status == 'pending' ? 'bg-warning' : ($item->status == 'gugur' ? 'bg-danger' : 'bg-success') }}">{{ Str::title($item->status) }}</span></td>
               @if(Auth::user()->level == 'petugas')
+              @if($item->status == 'pemenang')
+              @elseif($item->status == 'gugur')
+              @else
               <td>
               <form action="{{ route('lelangpetugas.setpemenang', $item->id) }}" method="POST">
                             @csrf
@@ -188,6 +175,7 @@
                           </form>
               </a>
               </td>
+              @endif
               @else
               @endif
           </tr>

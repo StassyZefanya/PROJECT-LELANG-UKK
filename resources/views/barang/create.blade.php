@@ -17,10 +17,6 @@
                       <form class="form" method="POST" action="{{ route('barang.store') }}" enctype="multipart/form-data" endata-parsley-validate>
                         @csrf  
                         <div class="row">
-                          <div class="mb-3">
-                            <label for="image" class="form-label">gambar</label>
-                            <input type="file" class="form-control" name="image" id="image">
-                          </div>
                             <div class="col-md-4 col-12">
                                 <div class="form-group mandatory">
                                     <label for="nama_barang" class="form-label">{{ __('Nama Barang') }}</label>

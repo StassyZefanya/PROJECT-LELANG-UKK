@@ -3,7 +3,7 @@
 @section('judul')
 @foreach($lelangs as $item)
 @if($item->pemenang == Auth::user()->nama_petugas)
-<h1>Pilih Barang Impianmu!</h1>
+
 @endif
 @endforeach
 <style>

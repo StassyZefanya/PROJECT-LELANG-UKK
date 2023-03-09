@@ -15,9 +15,9 @@
             <div class="card-body box-profile">
               <div class="text-center">
                 @if($users->level == 'admin')
-                    <img src="{{asset('adminlte/dist/img/user-gear.png')}}" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                    <img src="{{asset('adminlte/dist/img/avatar.png')}}" class="profile-user-img img-fluid img-circle" alt="User profile picture">
                     @else
-                    <img src="{{asset('adminlte/dist/img/user2-160x160.jpg')}}" class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                    <img src="{{asset('adminlte/dist/img/avatar.png')}}" class="profile-user-img img-fluid img-circle" alt="User profile picture">
                 @endif
               </div>
               <h3 class="profile-username text-center">{{$users->username}}</h3>

@@ -67,7 +67,6 @@
             <form action="{{ route('lelangin.destroy',$item) }}"method="POST">
             {{-- <a class="btn btn-primary"href="{{ route('barang.show', $historyLelangs->id)}}">Detail</a>
             <a class="btn btn-warning"href="{{ route('barang.edit', $historyLelangs->id)}}">Edit</a> --}}
-
             <a class="btn btn-success btn-sm" href="{{ route('lelangpetugas.show', $item->lelang->id)}}">
               <i class="fas fa-check">
               </i>

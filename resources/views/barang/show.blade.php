@@ -17,17 +17,6 @@
               <div class="card-content">
                   <div class="card-body">
                         <div class="row">
-                        
-                        <!-- Profile Image -->
-                        
-                            <div class="card-body box-profile">
-                                <div class="text-center">
-                                    @if ($databarang[0]->image)
-                                        <img class="img-fluid mt-3" src="{{ asset('storage/' . $databarang[0]->image) }}"
-                                            alt="User profile picture">
-                                    @endif
-                                </div>
-                            </div>
                         <br>
                             <div class="col-md-4 col-12">
                                 <div class="form-group mandatory">

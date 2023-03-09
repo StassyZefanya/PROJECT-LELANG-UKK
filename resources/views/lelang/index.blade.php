@@ -1,7 +1,7 @@
 @extends('template.master')
 
 @section('judul')
-<h1>Halaman lelang</h1>
+<h1>Halaman Lelang</h1>
 @endsection
 
 @section('content')
@@ -57,8 +57,8 @@
     </div>
   </div>
 </div>
-    <a hidden class="btn btn-primary mb-3"href="/lelang/create">Tambah lelang</a>
-    <a class="btn btn-info mb-3" target="_blank" href="/">
+    <a hidden class="btn btn-primary mb-3"href="/petugas/lelang/create">Tambah lelang</a>
+    <a class="btn btn-info mb-3" target="_blank" href="{{route('cetak.lelang')}}">
       <li class="fas fa fa-print"></li>
       Cetak Data
     </a>
@@ -85,7 +85,7 @@
                     <th>Harga Akhir</th>
                     <th>Pemenang</th>
                     <th>Status</th>
-                    @if(auth()->user()->level == 'petugas')
+                    @if(Auth::user()->level == 'petugas')
                     <th></th>
                     @else
                     @endif
@@ -133,13 +133,6 @@
               </i>
               Edit
           </a>
-            @csrf
-            @method('DELETE')   
-            <button class="btn btn-danger btn-sm" type="submit"value="Delete">
-              <i class="fas fa-trash">
-              </i>
-              Delete
-            </button>
           </form>
         </td>
         @else

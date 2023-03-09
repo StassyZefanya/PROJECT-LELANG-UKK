@@ -6,7 +6,7 @@
   <h1>HALLO ADMIN!</h1>
   @if(session()->has('successlogin'))
   <div class="alert alert-info col-md-5" role="alert">
-    {{session('successlogin')}}Selamat datang <strong>{{Auth::user()->name}}</strong>
+    {{session('successlogin')}}Selamat datang <strong>{{Auth::user()->username}}</strong>
   </div>
   @endif
     <div class="container-fluid">
@@ -103,7 +103,7 @@
               <td>{{ $item->lelang->barang->nama_barang }}</td>
               <td>{{$item->harga}}</td>
               <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('j-F-Y') }}</td>
-              <td> <span class="badge {{ $item->status == 'gugur' ? 'bg-danger' : 'bg-success' }}">{{ Str::title($item->status) }}</span></td>
+              <td> <span class="badge {{ $item->status == 'pending' ? 'bg-warning' : ($item->status == 'gugur' ? 'bg-danger' : 'bg-success') }}">{{ Str::title($item->status) }}</span></td>
           </tr>
           @empty
           <tr>

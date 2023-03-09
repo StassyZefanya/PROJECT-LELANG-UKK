@@ -22,7 +22,7 @@
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $item->barang->nama_barang }}</td>
-            <td>{{$item->barang->harga_awal}}</td>
+            <td>{{$item->barang->harga_barang}}</td>
             <td>{{$item->harga_akhir}}</td>
             <td>{{ $item->pemenang }}</td>
             <td>{{ $item->status }}</td>

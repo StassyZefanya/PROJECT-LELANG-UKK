@@ -38,24 +38,9 @@
       @enderror
         @if(!empty($lelangs))
       <div class="row">
-        <div class="col-md-5">
-          <!-- Profile Image -->
-          <div class="card card-primary card-outline">
-            <div class="card-body box-profile">
-              <span class="badge {{ $lelangs->status == 'ditutup' ? 'bg-danger' : 'bg-success' }}">{{ Str::title($lelangs->status) }}</span>
-              <div class="text-center">
-               @if($lelangs->barang->image)
-                <img class="img-fluid mt-3" src="{{ asset('storage/' . $lelangs->barang->image)}}" alt="User profile picture">
-                @endif
-            </div>
-        
-            </div>
-            <!-- /.card-body -->
-          </div>
-        </div>
         
         <!-- /.col -->
-        <div class="col-md-7">
+        <div class="col-md-12">
           <div class="card">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">

@@ -157,7 +157,27 @@ class UserController extends Controller
         $users->update(); 
         return redirect()->route('user.index')->with('editsuccess','Data Akun Berhasil Diedit');
     }
+    public function updateprofile(Request $request,User $user)
+    {
+        //
+    $user = auth()->user(); // Ambil data pengguna yang sedang login
+    $user->name = $request->input('name');
+    $user->telepon = $request->input('telepon');
+    $user->username = $request->input('username');
 
+        // Mengunggah file foto profil baru
+    if ($request->hasFile('photo')) {
+        $file = $request->file('photo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $path = $file->storeAs('post-images', $filename);
+        $user->photo = $filename;
+    }
+
+    if ($request->has('password')) {
+        $user->password = bcrypt($request->input('password'));
+    }
+    return redirect()->route('user.editprofile')->with('success', 'Profil berhasil diupdate');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -171,4 +191,5 @@ class UserController extends Controller
         $users->delete();
         return redirect()->route('user.index')->with('deletesuccess','Data Akun Berhasil Dihapus')->with('success','Data Akun Berhasil Terhapus');
     }
+    
 }
