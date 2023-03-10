@@ -47,7 +47,7 @@ class UserController extends Controller
     {
         //
         $data = $request->validate([
-            'name' => 'required|unique:users,name|min:3|max:50',
+            'nama_petugas' => 'required|unique:users,nama_petugas|min:3|max:50',
             'username' => 'required|unique:users,username|max:15',
             'level' => 'required',
             'password' => 'required|min:4',
@@ -55,9 +55,9 @@ class UserController extends Controller
             'telepon' => 'required|max:15',
         ],  
         [
-            'name.required' => 'Nama tidak boleh kosong',
-            'name.min' => 'Nama terlalu pendek',
-            'name.unique' => 'Nama sudah terdaftar',
+            'nama_petugas.required' => 'Nama tidak boleh kosong',
+            'nama_petugas.min' => 'Nama terlalu pendek',
+            'nama_petugas.unique' => 'Nama sudah terdaftar',
             'username.required' => 'Username tidak boleh kosong',
             'level.required' => 'Level tidak boleh kosong',
             'username.unique' => 'Username sudah terdaftar',
@@ -72,7 +72,7 @@ class UserController extends Controller
     );
 
         User::create([
-            'name' => ($data['name']),
+            'nama_petugas' => ($data['nama_petugas']),
             'username' => ($data['username']),
             'level' => ($data['level']),
             'password' => bcrypt($data['password']),
@@ -130,9 +130,9 @@ class UserController extends Controller
             'telepon' => 'required|max:15',
         ],
         [
-            'name.required' => 'Nama tidak boleh kosong',
-            'name.unique' => 'Nama sudah terdaftar',
-            'name.min' => 'Nama terlalu pendek',
+            'nama_petugas.required' => 'Nama tidak boleh kosong',
+            'nama_petugas.unique' => 'Nama sudah terdaftar',
+            'nama_petugas.min' => 'Nama terlalu pendek',
             'username.required' => 'Username tidak boleh kosong',
             'level.required' => 'Level tidak boleh kosong',
             'username.unique' => 'Username sudah terdaftar',
@@ -142,15 +142,15 @@ class UserController extends Controller
         ]
     
     );
-        if($request->name != $user->name) {
-            $rules['name'] = 'required|unique:users,name|min:3|max:50';
+        if($request->nama_petugas != $user->nama_petugas) {
+            $rules['nama_petugas'] = 'required|unique:users,nama_petugas|min:3|max:50';
         }
         elseif($request->username != $user->username) {
-            $rules['name'] = 'required|unique:users,username|max:15';
+            $rules['user'] = 'required|unique:users,username|max:15';
         }
 
         $users = User::find($user->id);
-        $users->name = $request->name;
+        $users->nama_petugas = $request->nama_petugas;
         $users->username = $request->username;
         $users->level = $request->level;
         $users->telepon = $request->telepon;
@@ -161,7 +161,7 @@ class UserController extends Controller
     {
         //
     $user = auth()->user(); // Ambil data pengguna yang sedang login
-    $user->name = $request->input('name');
+    $user->nama_petugas = $request->input('nama_petugas');
     $user->telepon = $request->input('telepon');
     $user->username = $request->input('username');
 

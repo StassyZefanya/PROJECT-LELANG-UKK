@@ -21,9 +21,9 @@
                 @csrf
               <div class="card-body">
                 <div class="form-group">
-                  <label for="name">Nama</label>
-                  <input type="text" name="name" value="{{old('name')}}"class="form-control @error('name') is-invalid @enderror" placeholder="Enter Nama">
-                  @error('name')
+                  <label for="nama_petugas">Nama</label>
+                  <input type="text" name="nama_petugas" value="{{old('nama_petugas')}}"class="form-control @error('nama_petugas') is-invalid @enderror" placeholder="Enter Nama">
+                  @error('nama_petugas')
                     <div class="invalid-feedback">
                       <strong>{{ $message }}</strong>
                     </div>

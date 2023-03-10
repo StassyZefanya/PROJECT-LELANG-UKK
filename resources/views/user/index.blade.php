@@ -89,7 +89,7 @@
                       <tbody>
                       <tr>
                           <td>{{ $loop->iteration }}</td>
-                          <td>{{ $value->name }}</td>
+                          <td>{{ $value->nama_petugas }}</td>
                           <td>{{ $value->username }}</td>
                           <td>{{ $value->level }}</td>
                           <td>{{ $value->telepon }}</td>
@@ -163,7 +163,7 @@
                       <tbody>
                       <tr>
                           <td>{{ $loop->iteration }}</td>
-                          <td>{{ $value->name }}</td>
+                          <td>{{ $value->nama_petugas }}</td>
                           <td>{{ $value->username }}</td>
                           <td>{{ $value->level }}</td>
                           <td>{{ $value->telepon }}</td>
@@ -238,7 +238,7 @@
                       <tbody>
                       <tr>
                           <td>{{ $loop->iteration }}</td>
-                          <td>{{ $value->name }}</td>
+                          <td>{{ $value->nama_petugas }}</td>
                           <td>{{ $value->username }}</td>
                           <td>{{ $value->level }}</td>
                           <td>{{ $value->telepon }}</td>
@@ -312,7 +312,7 @@
                       <tbody>
                       <tr>
                           <td>{{ $loop->iteration }}</td>
-                          <td>{{ $value->name }}</td>
+                          <td>{{ $value->nama_petugas }}</td>
                           <td>{{ $value->username }}</td>
                           <td>{{ $value->level }}</td>
                           <td>{{ $value->telepon }}</td>
